@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: 60 * 30, // 30 min (ujema se s Spring exp)
+    maxAge: 60 * 30, // 30 min
   });
 
   return res;
