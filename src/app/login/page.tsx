@@ -111,8 +111,8 @@ export default function LoginPage() {
                   className="card"
                   style={{
                     padding: 12,
-                    borderColor: "rgba(255, 99, 99, 0.35)",
-                    background: "rgba(255, 99, 99, 0.08)",
+                    borderColor: "rgba(134,136,172,0.35)",
+                    background: "	rgba(134,136,172,0.1)",
                   }}
                 >
                   <b>Login failed</b>
@@ -123,7 +123,7 @@ export default function LoginPage() {
               )}
             </form>
 
-  
+
           </section>
         </div>
       </div>

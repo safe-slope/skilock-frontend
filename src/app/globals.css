@@ -23,7 +23,6 @@ a {
 .app-page { padding: 24px; }
 
 
-
 h1 {
   margin: 0 0 12px;
   font-size: 24px;
@@ -33,7 +32,6 @@ h2 {
   margin: 0;
   font-size: 18px;
 }
-
 
 
 table {
@@ -196,6 +194,56 @@ button:disabled {
     align-items: center;
   }
 }
+
+.footer {
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+  background: rgba(134,136,172,0.1);
+  border-top: 1px solid  rgba(134,136,172,0.35);
+  color: rgba(255, 255, 255, 0.65);
+}
+
+
+.header {
+  padding: 16px;
+  border-bottom: 1px solid rgba(134,136,172,0.35);
+  background: rgba(134,136,172,0.1);
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-spacer {
+  margin-left: auto;
+}
+
+button:hover:not(:disabled) {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+}
+
+.header-nav a {
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.85);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.header-nav a:hover {
+  background: rgba(255,255,255,0.10);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+
+
 
 
 

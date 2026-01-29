@@ -2,29 +2,26 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Footer from "@/components/Footer";
+import Header from "./Header";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const hideNav = pathname === "/login";
 
   return (
-    <div style={{ display: "grid", gridTemplateRows: "auto 1fr" }}>
-      {!hideNav && (
-        <header style={{ padding: 16, borderBottom: "1px solid #ddd" }}>
-          <nav style={{ display: "flex", gap: 12 }}>
-            <Link href="/dashboard">Dashboard</Link>
-            <Link href="/locks">Locks</Link>
-            <Link href="/lock-events">Events</Link>
-            <Link href="/monitoring">Monitoring</Link>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "grid",
+        gridTemplateRows: "auto 1fr auto",
+      }}
+    >
+      {!hideNav && <Header />}
 
-            <form action="/api/auth/logout" method="post">
-              <button type="submit">Logout</button>
-            </form>
-          </nav>
-        </header>
-      )}
+      <main className="app-page">{children}</main>
 
-      <main style={{ padding: 24 }}>{children}</main>
+      {!hideNav && <Footer />}
     </div>
   );
 }
