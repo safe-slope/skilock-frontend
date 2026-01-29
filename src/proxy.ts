@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 const PROTECTED = ["/dashboard", "/locks", "/lock-events"];
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
 
   if (pathname === "/login") return NextResponse.next();
@@ -25,9 +25,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/dashboard/:path*",
-    "/locks/:path*",
-    "/lock-events/:path*"
-  ],
+  matcher: ["/dashboard/:path*", "/locks/:path*", "/lock-events/:path*"],
 };
