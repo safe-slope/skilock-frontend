@@ -9,34 +9,39 @@ type LoginOk =
 
 export async function POST(req: Request) {
   const base = process.env.AUTH_SERVICE_URL;
-  if (!base) return NextResponse.json({ error: "AUTH_SERVICE_URL missing" }, { status: 500 });
+  if (!base) {
+    return NextResponse.json({ error: "AUTH_SERVICE_URL missing" }, { status: 500 });
+  }
 
-  const body = (await req.json()) as LoginBody;
+  const body = await req.json(); // brez trim, brez sprememb
 
   const r = await fetch(`${base}/api/v1/auth/login`, {
     method: "POST",
-    headers: { "content-type": "application/json", accept: "text/plain, */*" },
+    headers: {
+      "content-type": "application/json",
+      accept: "text/plain, */*",
+    },
     body: JSON.stringify(body),
     cache: "no-store",
   });
 
   if (!r.ok) {
-    const text = await r.text();
-    return new NextResponse(text, {
-      status: r.status,
-      headers: { "content-type": r.headers.get("content-type") ?? "text/plain" },
-    });
+    const text = await r.text().catch(() => "");
+    return NextResponse.json(
+      { error: text || "Login failed" },
+      { status: r.status }
+    );
   }
 
-  const token = (await r.text()) as LoginOk;
+  const token = await r.text();
 
-  const res = NextResponse.json({ ok: true }, { status: 200 });
+  const res = NextResponse.json({ ok: true });
   res.cookies.set("access_token", token, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: 60 * 30, // 30 min
+    maxAge: 60 * 30,
   });
 
   return res;
