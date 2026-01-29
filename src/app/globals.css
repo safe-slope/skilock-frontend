@@ -303,7 +303,7 @@ button:active:not(:disabled) {
   flex-wrap: wrap;
 }
 
-.sl-mac {
+.sl-id {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 15px;
   letter-spacing: 0.2px;
