@@ -165,7 +165,7 @@ export default function LockEventsPage() {
           <div>
             <h1>Events</h1>
             <p className="muted" style={{ marginTop: -6 }}>
-              Lock activity log. Default sort: <b>time</b>.
+              Lock activity log.
             </p>
           </div>
 
@@ -279,11 +279,11 @@ export default function LockEventsPage() {
           <div className="sl-list">
             {events.map((e) => (
               <div key={e.id ?? `${e.eventTime}-${e.lockId}-${e.eventType}`} className="card sl-row">
-                <div className="sl-mac">Lock {e.lockId ?? "—"}</div>
+                <div className="sl-id">Lock ID: {e.lockId ?? "—"}</div>
 
                 <div className="sl-meta">
                   <span>
-                    <span className="muted">Type</span>{" "}
+                    <span className="muted">Event type</span>{" "}
                     <Badge kind={eventKind(e.eventType)}>{e.eventType ?? "—"}</Badge>
                   </span>
 
