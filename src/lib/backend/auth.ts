@@ -1,10 +1,11 @@
 import { cookies } from "next/headers";
 
-export function getAccessToken(): string | null {
-  return cookies().get("access_token")?.value ?? null;
+export async function getAccessToken(): Promise<string | null> {
+  const store = await cookies(); 
+  return store.get("access_token")?.value ?? null;
 }
 
-export function authHeader(): Record<string, string> {
-  const token = getAccessToken();
+export async function authHeader(): Promise<Record<string, string>> {
+  const token = await getAccessToken();
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
