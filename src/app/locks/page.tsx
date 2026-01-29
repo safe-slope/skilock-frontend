@@ -61,9 +61,9 @@ export default function LocksPage() {
   }
 
   async function pollLock(mac: string, want: "LOCKED" | "UNLOCKED") {
-    for (const delay of [250, 400, 600, 900, 1400]) {
+    for (const delay of [250, 400, 600, 900, 1400, 3000, 4000]) {
       await sleep(delay);
-      const r = await fetch(`/api/locks/mac/${encodeURIComponent(mac)}`, { cache: "no-store" });
+      const r = await fetch(`/api/locks/${encodeURIComponent(mac)}`, { cache: "no-store" });
       if (!r.ok) continue;
       const lock = (await r.json()) as Lock | null;
       if (lock && lock.state === want) return true;
