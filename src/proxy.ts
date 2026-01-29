@@ -1,20 +1,23 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// TODO: add applicable routes
-const PROTECTED = ["/dashboard", "/locks"];
+const PROTECTED = ["/dashboard", "/locks", "/lock-events"];
 
 export function proxy(req: NextRequest) {
-  const { pathname } = req.nextUrl;
+  const { pathname, search } = req.nextUrl;
 
-  const isProtected = PROTECTED.some((p) => pathname === p || pathname.startsWith(p + "/"));
+  if (pathname === "/login") return NextResponse.next();
+
+  const isProtected = PROTECTED.some(
+    (p) => pathname === p || pathname.startsWith(p + "/")
+  );
   if (!isProtected) return NextResponse.next();
 
   const token = req.cookies.get("access_token")?.value;
   if (!token) {
     const url = req.nextUrl.clone();
     url.pathname = "/login";
-    url.searchParams.set("next", pathname);
+    url.searchParams.set("next", pathname + search);
     return NextResponse.redirect(url);
   }
 
@@ -22,9 +25,5 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/dashboard/:path*",
-    "/locks/:path*",
-    
-  ],
+  matcher: ["/dashboard/:path*", "/locks/:path*", "/lock-events/:path*"],
 };
