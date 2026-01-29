@@ -257,8 +257,98 @@ button:active:not(:disabled) {
 }
 
 
+/* ===== Locks page  ===== */
 
+/* top header */
+.sl-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 12px;
+}
 
+.sl-controls {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
 
+/* summary */
+.sl-kpis {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+/* grouping */
+.sl-list {
+  display: grid;
+  gap: 14px;
+}
+
+.sl-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.10);
+  margin: 12px 0 18px;
+}
+
+/* single lock row */
+.sl-row {
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.sl-mac {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  min-width: 220px;
+}
+
+/* meta info */
+.sl-meta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 15px;
+  flex: 1;
+}
+
+/* actions */
+.sl-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* mode badge */
+.sl-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.03);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.sl-ok   { border-color: rgba(120,255,170,0.45); color: rgba(190,255,220,0.95); }
+.sl-bad  { border-color: rgba(255,120,120,0.45); color: rgba(255,200,200,0.95); }
+.sl-warn { border-color: rgba(255,210,120,0.35); }
+.sl-muted { opacity: 0.85; }
+
+/*primary action button */
+.sl-primary {
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.35);
+  font-weight: 800;
+}
 
 
