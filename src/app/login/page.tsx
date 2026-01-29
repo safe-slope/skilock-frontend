@@ -26,9 +26,18 @@ export default function LoginPage() {
       });
 
       if (!r.ok) {
-        const text = await r.text();
-        throw new Error(text || "Login failed");
+        let msg = "Login failed";
+        const ct = r.headers.get("content-type") ?? "";
+        if (ct.includes("application/json")) {
+          const j = await r.json().catch(() => null);
+          msg = j?.error ?? msg;
+        } else {
+          const text = await r.text().catch(() => "");
+          msg = text || msg;
+        }
+        throw new Error(msg);
       }
+
 
       router.push(next);
     } catch (e: any) {
