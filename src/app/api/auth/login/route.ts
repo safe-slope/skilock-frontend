@@ -13,35 +13,37 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "AUTH_SERVICE_URL missing" }, { status: 500 });
   }
 
-  const body = await req.json(); // brez trim, brez sprememb
+  const body = (await req.json()) as LoginBody;
+  const payload = {
+    username: (body as any).username?.trim?.() ?? (body as any).username,
+    password: (body as any).password,
+  };
 
   const r = await fetch(`${base}/api/v1/auth/login`, {
     method: "POST",
-    headers: {
-      "content-type": "application/json",
-      accept: "text/plain, */*",
-    },
-    body: JSON.stringify(body),
+    headers: { "content-type": "application/json", accept: "text/plain, */*" },
+    body: JSON.stringify(payload),
     cache: "no-store",
   });
 
   if (!r.ok) {
     const text = await r.text().catch(() => "");
+
     return NextResponse.json(
       { error: text || "Login failed" },
       { status: r.status }
     );
   }
 
-  const token = await r.text();
+  const token = (await r.text()) as LoginOk;
 
-  const res = NextResponse.json({ ok: true });
+  const res = NextResponse.json({ ok: true }, { status: 200 });
   res.cookies.set("access_token", token, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: 60 * 30,
+    maxAge: 60 * 30, // 30 min
   });
 
   return res;
