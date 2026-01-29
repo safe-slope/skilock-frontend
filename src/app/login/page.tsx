@@ -22,7 +22,7 @@ export default function LoginPage() {
       const r = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username: username.trim(), password }),
       });
 
       if (!r.ok) {
@@ -40,7 +40,6 @@ export default function LoginPage() {
         throw new Error(msg);
       }
 
-
       router.push(next);
     } catch (e: any) {
       setErr(e?.message ?? "Login failed");
@@ -49,29 +48,85 @@ export default function LoginPage() {
     }
   }
 
-  return (
-    <main style={{ padding: 24, maxWidth: 420 }}>
-      <h1>Login</h1>
+   return (
+    <main style={{ minHeight: "100vh", padding: "40px 0" }}>
+      <div className="container">
+        <div className="grid-auth">
+      
+          <section>
+            <h1>SkiLock</h1>
+            <p className="muted" style={{ marginTop: 6, maxWidth: 520 }}>
+              Operator dashboard for smart ski locks.
+            </p>
 
-      <form onSubmit={onSubmit} style={{ display: "grid", gap: 12 }}>
-        <input
-          placeholder="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          placeholder="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+            <ul style={{ marginTop: 18, paddingLeft: 18, lineHeight: 1.8 }}>
+              <li>Real-time overview of lock state and mode</li>
+              <li>Remote lock/unlock </li>
+              <li>Events visibility</li>
+            </ul>
 
-        <button disabled={loading} type="submit">
-          {loading ? "Signing in..." : "Sign in"}
-        </button>
+          </section>
 
-        {err && <p style={{ color: "tomato" }}>{err}</p>}
-      </form>
+        
+          <section className="card" style={{ maxWidth: 440, width: "100%" }}>
+            <h2 style={{ marginTop: 0, marginBottom: 6 }}>Sign in</h2>
+            <p className="muted" style={{ marginTop: 0, marginBottom: 16 }}>
+              Use your operator account credentials.
+            </p>
+
+            <form onSubmit={onSubmit} style={{ display: "grid", gap: 12 }}>
+              <label style={{ display: "grid", gap: 6 }}>
+                <span className="muted" style={{ fontSize: 13 }}>
+                  Username
+                </span>
+                <input
+                  className="input"
+                  placeholder="e.g. admin-resort"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  autoComplete="username"
+                />
+              </label>
+
+              <label style={{ display: "grid", gap: 6 }}>
+                <span className="muted" style={{ fontSize: 13 }}>
+                  Password
+                </span>
+                <input
+                  className="input"
+                  placeholder="••••••••"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                />
+              </label>
+
+              <button className="btn-primary" disabled={loading} type="submit">
+                {loading ? "Signing in…" : "Sign in"}
+              </button>
+
+              {err && (
+                <div
+                  className="card"
+                  style={{
+                    padding: 12,
+                    borderColor: "rgba(255, 99, 99, 0.35)",
+                    background: "rgba(255, 99, 99, 0.08)",
+                  }}
+                >
+                  <b>Login failed</b>
+                  <div className="muted" style={{ marginTop: 4 }}>
+                    {err}
+                  </div>
+                </div>
+              )}
+            </form>
+
+  
+          </section>
+        </div>
+      </div>
     </main>
   );
 }
