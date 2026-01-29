@@ -148,7 +148,7 @@ export default function LocksPage() {
           <div>
             <h1>Locks</h1>
             <p className="muted" style={{ marginTop: -6 }}>
-              Locks are identified by <b>MAC address</b> and shown below, grouped by <b>locker</b>.
+              Locks are identified by <b>ID address</b> and shown below, grouped by <b>locker</b>.
             </p>
           </div>
 
@@ -192,7 +192,7 @@ export default function LocksPage() {
                   return (
                     <div key={lock.id} className="card sl-row">
                       {/* left: lock identity */}
-                      <div className="sl-mac">{lock.macAddress}</div>
+                      <div className="sl-id">Lock ID: {lock.id}</div>
 
                       {/* middle: info */}
                       <div className="sl-meta">
