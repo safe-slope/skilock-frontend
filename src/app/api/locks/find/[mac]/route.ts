@@ -1,8 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { backendFetch } from "@/lib/backend/client";
 
-export async function GET(_req: Request, ctx: { params: { mac: string } }) {
-  const { mac } = ctx.params;
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: Promise<{ mac: string }> }
+) {
+  const { mac } = await params;
 
   const r = await backendFetch(`/api/v1/locks/mac/${encodeURIComponent(mac)}`, {
     method: "GET",

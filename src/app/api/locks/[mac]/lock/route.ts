@@ -1,41 +1,16 @@
-import { NextResponse } from "next/server";
-import { authHeader } from "@/lib/backend/auth";
+import { NextResponse, type NextRequest } from "next/server";
+import { backendFetch } from "@/lib/backend/client";
 
 export async function POST(
-  _: Request,
-  { params }: { params: { mac: string } }
+  _req: NextRequest,
+  { params }: { params: Promise<{ mac: string }> }
 ) {
-  const base = process.env.LOCK_SERVICE_URL;
-  if (!base) {
-    return NextResponse.json(
-      { error: "LOCK_SERVICE_URL missing" },
-      { status: 500 }
-    );
-  }
+  const { mac } = await params;
 
-  const { mac } = params;
-
-  const r = await fetch(
-    `${base}/api/v1/locks/${encodeURIComponent(mac)}/lock`,
-    {
-      method: "POST",
-      headers: {
-        ...(await authHeader()),
-      },
-      cache: "no-store",
-    }
-  );
+  const r = await backendFetch(`/api/v1/locks/${encodeURIComponent(mac)}/lock`, {
+    method: "POST",
+  });
 
   const text = await r.text();
-
-  if (!r.ok) {
-    return new NextResponse(text, {
-      status: r.status,
-      headers: {
-        "content-type": r.headers.get("content-type") ?? "text/plain",
-      },
-    });
-  }
-
-  return NextResponse.json({ ok: true });
+  return new NextResponse(text || null, { status: r.status });
 }
