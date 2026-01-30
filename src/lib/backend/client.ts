@@ -1,16 +1,17 @@
-import { authHeader } from "@/lib/backend/auth";
+import { authHeader } from "./auth";
 
-export async function backendFetch(path: string, init?: RequestInit) {
+export async function backendFetch(path: string, options: RequestInit = {}) {
   const base = process.env.LOCK_SERVICE_URL;
   if (!base) throw new Error("LOCK_SERVICE_URL missing");
 
   const headers = {
-    ...(init?.headers ?? {}),
     ...(await authHeader()),
-  } as Record<string, string>;
+    ...(options.headers || {}),
+  };
+
 
   return fetch(`${base}${path}`, {
-    ...init,
+    ...options,
     headers,
     cache: "no-store",
   });
